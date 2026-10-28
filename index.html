@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analogy Narrative Competition</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a2744;
+    --ink-light: #2e3f66;
+    --parchment: #f5f0e8;
+    --parchment-dark: #ede6d8;
+    --gold: #c9963a;
+    --gold-muted: #e8c97a;
+    --muted: #7a7060;
+    --error: #9b3a2a;
+    --success: #2a6640;
+    --surface: #ffffff;
+    --purple-bg: #eeecf8;
+    --purple-border: #b8b0e0;
+    --amber-bg: #fdf6e3;
+    --amber-border: #e8c97a;
+    --red-bg: #fdf0ee;
+    --red-border: #e8b0a0;
+    --radius: 4px;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  body {
+    padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    width: 100%;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-muted);
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-muted);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: #c8c0b0;
+    max-width: 52ch;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── Tabs ── */
+  .tabs-wrap {
+    width: 100%;
+    background: var(--ink);
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .tabs {
+    display: flex;
+    max-width: 760px;
+    width: 100%;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #a09888;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: #d0c8b8; }
+
+  .tab-btn.active {
+    color: var(--gold-muted);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── Page layout ── */
+  .page {
+    width: 100%;
+    max-width: 760px;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── Info panels ── */
+  .info-section {
+    margin-bottom: 2rem;
+  }
+
+  .info-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--parchment-dark);
+  }
+
+  .info-section p, .info-section li {
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  .info-section ul {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .callout {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .callout strong { font-weight: 500; }
+
+  .callout.purple {
+    background: var(--purple-bg);
+    border-left: 3px solid var(--purple-border);
+    color: #3a3560;
+  }
+
+  .callout.amber {
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber-border);
+    color: #5a4a1a;
+  }
+
+  .callout.red {
+    background: var(--red-bg);
+    border-left: 3px solid var(--red-border);
+    color: #6a2a1a;
+  }
+
+  /* ── Analogy diagram ── */
+  .analogy-diagram {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 1.5rem 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--parchment-dark);
+  }
+
+  .diagram-col {
+    flex: 1;
+    padding: 1rem 1.25rem;
+  }
+
+  .diagram-col.left { background: #eeeaf8; }
+  .diagram-col.right { background: #fdf6e3; }
+
+  .diagram-col h3 {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    color: var(--ink);
+  }
+
+  .diagram-col.left h3 { color: #3a3070; }
+  .diagram-col.right h3 { color: #7a5a10; }
+
+  .diagram-arrows {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    background: #fafafa;
+    border-left: 1px solid var(--parchment-dark);
+    border-right: 1px solid var(--parchment-dark);
+    gap: 0.6rem;
+  }
+
+  .diagram-arrows .arrow {
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .mapping-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding: 0.2rem 0;
+  }
+
+  .mapping-item {
+    font-size: 0.875rem;
+    padding: 0.2rem 0;
+    color: inherit;
+  }
+
+  /* ── Tips grid ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.875rem;
+    margin-top: 1rem;
+  }
+
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 6px;
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+
+  .tip-card .tip-icon {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .tip-card strong {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Form ── */
+  .narrative-section {
+    margin-bottom: 2rem;
+  }
+
+  .narrative-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .narrative-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .badge-analogy-1 { background: var(--purple-bg); color: #3a3070; border: 1px solid var(--purple-border); }
+  .badge-analogy-2 { background: var(--amber-bg); color: #7a5a10; border: 1px solid var(--amber-border); }
+  .badge-foil      { background: var(--red-bg);    color: #6a2a1a; border: 1px solid var(--red-border); }
+
+  .narrative-label-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .narrative-label-text span {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--muted);
+    margin-left: 0.25rem;
+  }
+
+  .narrative-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    padding-left: 2.25rem;
+    line-height: 1.6;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 0.875rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,150,58,0.12);
+  }
+
+  textarea::placeholder { color: #b0a898; font-style: italic; }
+
+  .textarea-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 0.3rem;
+    min-height: 1.2rem;
+  }
+
+  .error-msg {
+    font-size: 0.8rem;
+    color: var(--error);
+    flex: 1;
+  }
+
+  .char-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: 0.5rem;
+  }
+
+  .char-count.over { color: var(--error); }
+
+  .word-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: 0.5rem;
+  }
+
+  .word-count.under { color: #b06a20; }
+  .word-count.ok    { color: var(--success); }
+
+  /* Mapping field */
+  .mapping-section {
+    margin-bottom: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+
+  .mapping-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .mapping-section p {
+    font-size: 0.83rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .mapping-rows { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .mapping-pair {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .mapping-pair input {
+    height: 36px;
+    padding: 0 0.75rem;
+    background: var(--parchment);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .mapping-pair input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,150,58,0.12);
+    background: var(--surface);
+  }
+
+  .mapping-pair input::placeholder { color: #b0a898; font-style: italic; }
+
+  .mapping-arrow {
+    color: var(--muted);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .mapping-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c0a890;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0 0.25rem;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .mapping-remove:hover { color: var(--error); }
+
+  .add-mapping-btn {
+    margin-top: 0.5rem;
+    background: none;
+    border: 1px dashed var(--parchment-dark);
+    border-radius: var(--radius);
+    padding: 0.4rem 0.875rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .add-mapping-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Meta */
+  .meta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 420px) { .meta-row { grid-template-columns: 1fr; } }
+
+  .field-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .field-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  input[type="text"], input[type="email"] {
+    width: 100%;
+    height: 40px;
+    padding: 0 0.875rem;
+    background: var(--surface);
+    border: 1px solid var(--parchment-dark);
+    border-radius: var(--radius);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input[type="text"]:focus, input[type="email"]:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,150,58,0.12);
+  }
+
+  input::placeholder { color: #b0a898; }
+
+  /* Submit */
+  .submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .submit-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 34ch;
+    line-height: 1.5;
+  }
+
+  button[type="submit"] {
+    background: var(--ink);
+    color: var(--parchment);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: var(--radius);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  button[type="submit"]:hover { background: var(--ink-light); }
+  button[type="submit"]:active { transform: scale(0.98); }
+  button[type="submit"]:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+  /* Thank you */
+  .thank-you {
+    display: none;
+    text-align: center;
+    padding: 4rem 1rem;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .thank-you h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 1rem 0 0.75rem;
+  }
+
+  .thank-you h2 em { font-style: italic; color: var(--gold); }
+
+  .thank-you p {
+    font-size: 0.975rem;
+    color: var(--muted);
+    max-width: 40ch;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .submit-another {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--gold-muted);
+    cursor: pointer;
+    text-decoration: none;
+    padding-bottom: 1px;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+
+  .submit-another:hover { border-bottom-color: var(--gold); }
+
+  /* Section divider */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.75rem 0 1.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--parchment-dark);
+  }
+
+  footer {
+    width: 100%;
+    max-width: 760px;
+    border-top: 1px solid var(--parchment-dark);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── Examples ── */
+  .example-set {
+    margin-bottom: 2.5rem;
+  }
+
+  .example-set-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--parchment-dark);
+  }
+
+  .example-set-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .example-difficulty {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .difficulty-easy  { background: #e8f5ee; color: #2a6640; border: 1px solid #b0d8be; }
+  .difficulty-hard  { background: var(--red-bg); color: #6a2a1a; border: 1px solid var(--red-border); }
+
+  .example-narrative {
+    margin-bottom: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .example-narrative-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--parchment-dark);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .example-narrative-label.label-a  { background: var(--purple-bg); color: #3a3070; }
+  .example-narrative-label.label-b  { background: var(--amber-bg);  color: #7a5a10; }
+  .example-narrative-label.label-c  { background: var(--red-bg);    color: #6a2a1a; }
+
+  .example-narrative-body {
+    padding: 0.875rem 1rem;
+    font-size: 0.925rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  .example-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <p class="hero-eyebrow">Narrative Research Competition</p>
+  <h1>Analogy <em>Narratives</em></h1>
+  <p class="hero-sub">Help us build a dataset that tests the limits of AI reasoning — by writing stories only humans can truly understand.</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="about">About</button>
+    <button class="tab-btn" data-tab="tips">Tips</button>
+    <button class="tab-btn" data-tab="examples">Examples</button>
+    <button class="tab-btn" data-tab="submit">Submit</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── About ── -->
+  <div class="panel active" id="panel-about">
+
+    <div class="info-section">
+      <h2>Why we're interested</h2>
+      <ul>
+        <li>Identifying analogies is a key part of human reasoning.</li>
+        <li>Large language models such as Claude and ChatGPT have gotten very good at complex tasks — including complex reasoning. We want to find where they still fall short.</li>
+        <li>We are building a dataset of challenging analogical narratives to test models' abilities, and to identify the weak spots where even the best models struggle.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h2>Why we need you</h2>
+      <ul>
+        <li>There is a lack of high-quality, annotated analogical narrative datasets.</li>
+        <li>Creating a clever analogy that stumps a model is mentally demanding — so we made it a competition.</li>
+      </ul>
+    </div>
+
+    <div class="info-section">
+      <h2>What is an analogy?</h2>
+      <p style="margin-bottom:0.75rem">An analogy is a type of similarity between two stories where the <em>relational</em> structure of one story maps onto another — even if the individual elements look nothing alike on the surface.</p>
+      <p style="margin-bottom:0.75rem">For example, comparing the solar system to an atom is an analogy: a planet orbiting the sun maps onto an electron orbiting a nucleus. The objects are completely different, but the <em>relations</em> between them are the same.</p>
+      <p>Comparing a basketball to an orange because they share the same colour and shape is <strong>not</strong> an analogy — that is surface-level similarity, not relational similarity. The key question is always: do the <em>relationships</em> between things in one story mirror the relationships in the other?</p>
+    </div>
+
+    <div class="info-section">
+      <h2>What you'll submit</h2>
+      <p style="margin-bottom:1rem">Three narratives, each at least 25 words:</p>
+
+      <div class="callout purple">
+        <strong>Narrative 1 — Source</strong><br>
+        Your primary story. The main entities and their relations will map onto those in Narrative 2.
+      </div>
+
+      <div class="callout amber">
+        <strong>Narrative 2 — Target</strong><br>
+        A story in a different setting, with different characters — but with the same relational structure as Narrative 1.
+      </div>
+
+      <div class="callout red">
+        <strong>Narrative 3 — Foil</strong><br>
+        Semantically similar to Narrative 1 (same topic, overlapping vocabulary), but <em>not</em> an analogy to it. It should look like it belongs, but the structural mapping with Narrative 1 breaks down.
+      </div>
+
+      <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--muted)">You'll also provide the entity mappings between Narratives 1 and 2 — core entities should be mapped; superfluous noise entities don't need to be.</p>
+    </div>
+
+    <div class="callout red" style="margin-top:1.5rem">
+      <strong>⚠ Do not use LLMs to write your narratives.</strong> The goal is to test AI. Models will not be stumped by text they could have written themselves — and you won't win with AI-generated entries.<br><br>
+      <strong>⚠ Do not test your analogies on LLMs either</strong> to see how they perform. Conversations with LLMs can be used as further training data, rendering the data useless for experimentation.
+    </div>
+
+    <div class="info-section" style="margin-top:1.5rem">
+      <h2>Example mapping</h2>
+      <p style="margin-bottom:0.75rem; font-size:0.9rem">This is a simple example to illustrate the structure. Your submission should be more creative.</p>
+      <div class="analogy-diagram">
+        <div class="diagram-col left">
+          <h3>Narrative 1 — Solar system</h3>
+          <div class="mapping-item">Planet</div>
+          <div class="mapping-item">Orbits</div>
+          <div class="mapping-item">Sun</div>
+          <div class="mapping-item">Gravity</div>
+        </div>
+        <div class="diagram-arrows">
+          <div class="arrow">&rarr;</div>
+          <div class="arrow">&rarr;</div>
+          <div class="arrow">&rarr;</div>
+          <div class="arrow">&rarr;</div>
+        </div>
+        <div class="diagram-col right">
+          <h3>Narrative 2 — Atom</h3>
+          <div class="mapping-item">Electrons</div>
+          <div class="mapping-item">Orbit</div>
+          <div class="mapping-item">Nucleus</div>
+          <div class="mapping-item">Electromagnetism</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--muted)">Narrative 3 would be another space story using many of the same words as the Narrative 1 (so perhaps including "planet" or "sun"), but structured so it does <em>not</em> map cleanly onto Narrative 1 (the solar system narrative).</p>
+      <p style="font-size:0.85rem; color:var(--muted); margin-top:0.75rem"><strong style="color:var(--ink)">A note on languages that build meaning into words.</strong> In some languages, a single word can express what English needs a whole sentence to say — for example, in Turkish, <em>evlerinizden</em> means "from your (plural) houses," packing house + your + plural + from into one word. If you're submitting in a language like this, you don't need to map whole words. Instead, map the meaningful pieces: the part that means "house" maps to whatever plays that role in Narrative 2, etc.</p>
+    </div>
+
+    <div class="info-section">
+      <h2>How it's judged</h2>
+      <p>The best submissions will stump the best language models, while remaining relatively easy for a human to solve. Originality and conceptual distance between the two analogous domains are key.</p>
+    </div>
+
+    <div class="info-section">
+      <h2>Competition groups &amp; prizes</h2>
+      <p style="margin-bottom:1rem">Submissions are organised into three groups:</p>
+      <ol style="padding-left:1.25rem; display:flex; flex-direction:column; gap:0.6rem; font-size:0.95rem; color:var(--ink-light); line-height:1.8;">
+        <li><strong>English only</strong></li>
+        <li><strong>High-resource languages</strong> — Spanish, German, Japanese, French, Arabic, Mandarin, Italian, Polish, Portuguese, Dutch, Korean, Vietnamese, Swedish, Serbo-Croatian, Russian, and Farsi</li>
+        <li><strong>Low-resource languages</strong> — any language not listed in the other groups</li>
+      </ol>
+      <p style="margin-top:1rem">The best submission from each group wins a gift card worth <strong>100 Francs / Euros / USD</strong> to Amazon or Galaxus, depending on the winner's country of residence. If neither option is available for your country, please contact the organizers to arrange an alternative.</p>
+    </div>
+
+    <div style="text-align:center; margin-top:2rem">
+      <button class="tab-btn" style="background:var(--ink); color:var(--parchment); border:none; padding:0.7rem 2rem; border-radius:4px; font-family:Inter,sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer;" onclick="switchTab('tips')">Read the tips →</button>
+    </div>
+  </div>
+
+  <!-- ── Tips ── -->
+  <div class="panel" id="panel-tips">
+    <div class="info-section">
+      <h2>How to write a strong submission</h2>
+      <p style="margin-bottom:1.25rem">These are the things that are more likely to stump LLMs.</p>
+
+      <div class="tips-grid">
+        <div class="tip-card">
+          <strong>Go for distance</strong>
+          Analogies between semantically distant domains are harder for models. A chef ↔ baker is easier than a chef ↔ astronaut, a chef ↔ penguin, or a chef ↔ bonsai tree — all of which are semantically more different.
+        </div>
+        <div class="tip-card">
+          <strong>Avoid clichés</strong>
+          If the analogy is commonly used as a metaphor or idiom (desert = scarcity, race = competition), it's probably too obvious. The atom/solar system example provided previously would probably fall into this category.
+        </div>
+        <div class="tip-card">
+          <strong>Add noise</strong>
+          Include a little superfluous detail in each narrative. The core entities need to map, but superfluous entities don't — extra entities that don't correspond to the other story can distract and confuse models. Additionally, mappings can be many-to-one: for example, the eight planets of the solar system listed out individually could all map to the single electron in a hydrogen atom.
+        </div>
+        <div class="tip-card">
+          <strong>Vary sentence structure</strong>
+          Models can use identical grammar as a shortcut. If both narratives have the same syntactic shape sentence-by-sentence, that's a giveaway. Vary your phrasing.
+        </div>
+        <div class="tip-card">
+          <strong>Make the foil convincing</strong>
+          Narrative 3 should look like an analogy on the surface — same topic as Narrative 1, similar words — but the structural mapping back to Narrative 1 should break down under scrutiny.
+        </div>
+      </div>
+
+      <div class="callout amber" style="margin-top:1.5rem">
+        <strong>A better example:</strong> instead of solar system ↔ atom, consider something like a family unit ↔ atom. The electron orbiting the nucleus maps to parents fussing over their children; electromagnetism maps to love. This is harder to spot because the domains feel unrelated at first glance, and atoms are generally not used as a metaphor for familial ties and vice versa.
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:1.5rem">
+      <button class="tab-btn" style="background:var(--ink); color:var(--parchment); border:none; padding:0.7rem 2rem; border-radius:4px; font-family:Inter,sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer;" onclick="switchTab('examples')">See examples →</button>
+    </div>
+  </div>
+
+  <!-- ── Examples ── -->
+  <div class="panel" id="panel-examples">
+
+    <div class="info-section">
+      <h2>Example submissions</h2>
+      <p style="margin-bottom:1.5rem">Below are short examples to illustrate the format. The first three show narrative sets that models can already solve — these are <em>not</em> the kind of submissions we are looking for. The final example is the kind that stumps a model, and is what we are after.</p>
+    </div>
+
+    <!-- Example 1 -->
+    <div class="example-set">
+      <div class="example-set-header">
+        <h2>Example 1</h2>
+        <span class="example-difficulty difficulty-easy">Model can solve</span>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-a">A — Source</div>
+        <div class="example-narrative-body">The chef was excited about the day's lunch special — an Indian inspired chicken dish. While plating the dish to serve to customers, he drizzled mint chutney over the top, and then dusted it with garam masala.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-b">B — Target</div>
+        <div class="example-narrative-body">The children danced when they heard on the news that there may be a snow day. They watched as the hail smashed against the pavement, as time for school approached. A flurry of snow followed.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-c">C — Foil</div>
+        <div class="example-narrative-body">The baker was very excited about the day's dessert special — a caramel cheesecake. He went to decorate the cake, but then realised that he forgot to order the cocoa and cinnamon he wanted to dust it with. He couldn't help but be irritated with himself for forgetting to order ingredients for a recipe he had been excited to make all week.</div>
+      </div>
+    </div>
+
+    <!-- Example 2 -->
+    <div class="example-set">
+      <div class="example-set-header">
+        <h2>Example 2</h2>
+        <span class="example-difficulty difficulty-easy">Model can solve</span>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-a">A — Source</div>
+        <div class="example-narrative-body">The young boy gazed in amazement as the parade proceeded down the avenue. A marching band, with trumpets, tubas, and drums filled the streets with music while women in colorful dresses danced.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-b">B — Target</div>
+        <div class="example-narrative-body">The bear observed hungrily as the fish proceeded upstream. Flies buzzed around in the air, as rotting fish carcasses contaminated the area with an awful stench.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-c">C — Foil</div>
+        <div class="example-narrative-body">The young boy decided to try to cross the street as the parade came to a stop in the middle of the avenue. He elbowed his way through a marching band with trumpets, tubas, and drums while women in colorful dresses shouted at him to look out.</div>
+      </div>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="example-set">
+      <div class="example-set-header">
+        <h2>Example 3</h2>
+        <span class="example-difficulty difficulty-easy">Model can solve</span>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-a">A — Source</div>
+        <div class="example-narrative-body">Frances showed up to the basketball game despite her team's losing streak. To everyone's surprise, at the 10 minute mark, the forward progressed down the court. He shot the ball into the hoop and made a basket.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-b">B — Target</div>
+        <div class="example-narrative-body">The toddler slowly moved a fork full of broccoli into his mouth, to both his parents' amazement.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-c">C — Foil</div>
+        <div class="example-narrative-body">Frances was the striker on her local soccer team. She showed up to the game late, and ran straight toward the field as the goal keeper blocked the ball from entering the net.</div>
+      </div>
+    </div>
+
+    <!-- Example 4 — stumps model -->
+    <div class="example-set">
+      <div class="example-set-header">
+        <h2>Example 4</h2>
+        <span class="example-difficulty difficulty-hard">Stumps a model</span>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-a">A — Source</div>
+        <div class="example-narrative-body">The beef likely was contaminated with E. Coli after sitting in the hot sun all day long.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-b">B — Target</div>
+        <div class="example-narrative-body">At first Shelly could not stand him, but eventually fell in love.</div>
+      </div>
+      <div class="example-narrative">
+        <div class="example-narrative-label label-c">C — Foil</div>
+        <div class="example-narrative-body">All day long the hot sun beat down upon the picnic. Sonja was glad she did not bring the beef dish she had originally planned, as it would have probably been contaminated with E. Coli.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:1rem">
+      <button class="tab-btn" style="background:var(--ink); color:var(--parchment); border:none; padding:0.7rem 2rem; border-radius:4px; font-family:Inter,sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer;" onclick="switchTab('submit')">Go to submission form →</button>
+    </div>
+  </div>
+
+  <!-- ── Submit ── -->
+  <div class="panel" id="panel-submit">
+
+    <div style="text-align:center; padding: 3rem 1rem;">
+      <p style="font-size:1rem; color:var(--muted); margin-bottom:2rem; max-width:42ch; margin-left:auto; margin-right:auto; line-height:1.8;">Ready to submit your three narratives? The form opens in a new tab. Your responses are saved securely to our research database.</p>
+      <a href="https://usi.qualtrics.com/jfe/form/SV_3jYjOmCr0jWShhQ" target="_blank" rel="noopener" style="display:inline-block; background:var(--ink); color:var(--parchment); text-decoration:none; padding:0.85rem 2.5rem; border-radius:4px; font-family:Inter,sans-serif; font-size:1rem; font-weight:500; transition:background 0.15s;" onmouseover="this.style.background='#2e3f66'" onmouseout="this.style.background='#1a2744'">Open submission form →</a>
+    </div>
+
+    <form id="submission-form" novalidate style="display:none">
+
+      <!-- Narrative 1 -->
+      <div class="narrative-section">
+        <div class="narrative-header">
+          <span class="narrative-badge badge-analogy-1" aria-hidden="true">1</span>
+          <label class="narrative-label-text" for="n1">First narrative <span>— source</span></label>
+        </div>
+        <p class="narrative-desc">Your primary story. Its entities and relations will map onto Narrative 2.</p>
+        <textarea id="n1" name="n1" placeholder="Write your first narrative here… (minimum 25 words)" maxlength="3000" aria-required="true" aria-describedby="err-n1 wc1"></textarea>
+        <div class="textarea-footer">
+          <div class="error-msg" id="err-n1" role="alert" aria-live="polite"></div>
+          <span class="word-count" id="wc1"></span>
+        </div>
+      </div>
+
+      <!-- Narrative 2 -->
+      <div class="narrative-section">
+        <div class="narrative-header">
+          <span class="narrative-badge badge-analogy-2" aria-hidden="true">2</span>
+          <label class="narrative-label-text" for="n2">Second narrative <span>— target</span></label>
+        </div>
+        <p class="narrative-desc">A different setting, different characters — the same relational structure as Narrative 1.</p>
+        <textarea id="n2" name="n2" placeholder="Write your second narrative here… (minimum 25 words)" maxlength="3000" aria-required="true" aria-describedby="err-n2 wc2"></textarea>
+        <div class="textarea-footer">
+          <div class="error-msg" id="err-n2" role="alert" aria-live="polite"></div>
+          <span class="word-count" id="wc2"></span>
+        </div>
+      </div>
+
+      <!-- Mappings -->
+      <div class="mapping-section">
+        <h3>Entity mappings</h3>
+        <p>List the core entities from Narrative 1 and their counterparts in Narrative 2. Superfluous entities added for noise don't need to be mapped.</p>
+        <div class="mapping-rows" id="mapping-rows">
+          <div class="mapping-pair">
+            <input type="text" placeholder="Entity in Narrative 1" aria-label="Entity in Narrative 1">
+            <span class="mapping-arrow">→</span>
+            <input type="text" placeholder="Entity in Narrative 2" aria-label="Entity in Narrative 2">
+            <button type="button" class="mapping-remove" aria-label="Remove row" title="Remove">×</button>
+          </div>
+          <div class="mapping-pair">
+            <input type="text" placeholder="Entity in Narrative 1" aria-label="Entity in Narrative 1">
+            <span class="mapping-arrow">→</span>
+            <input type="text" placeholder="Entity in Narrative 2" aria-label="Entity in Narrative 2">
+            <button type="button" class="mapping-remove" aria-label="Remove row" title="Remove">×</button>
+          </div>
+          <div class="mapping-pair">
+            <input type="text" placeholder="Entity in Narrative 1" aria-label="Entity in Narrative 1">
+            <span class="mapping-arrow">→</span>
+            <input type="text" placeholder="Entity in Narrative 2" aria-label="Entity in Narrative 2">
+            <button type="button" class="mapping-remove" aria-label="Remove row" title="Remove">×</button>
+          </div>
+        </div>
+        <button type="button" class="add-mapping-btn" id="add-mapping">+ Add another mapping</button>
+        <div class="error-msg" id="err-mapping" role="alert" aria-live="polite" style="margin-top:0.5rem"></div>
+      </div>
+
+      <!-- Narrative 3 -->
+      <div class="narrative-section">
+        <div class="narrative-header">
+          <span class="narrative-badge badge-foil" aria-hidden="true">3</span>
+          <label class="narrative-label-text" for="n3">Third narrative <span>— foil</span></label>
+        </div>
+        <p class="narrative-desc">Semantically similar to Narrative 1 — same topic, overlapping vocabulary — but <em>not</em> an analogy to it. The structural mapping with Narrative 1 should break down.</p>
+        <textarea id="n3" name="n3" placeholder="Write your foil narrative here… (minimum 25 words)" maxlength="3000" aria-required="true" aria-describedby="err-n3 wc3"></textarea>
+        <div class="textarea-footer">
+          <div class="error-msg" id="err-n3" role="alert" aria-live="polite"></div>
+          <span class="word-count" id="wc3"></span>
+        </div>
+      </div>
+
+      <div class="section-divider">About you</div>
+
+      <!-- Meta -->
+      <div class="meta-row" style="grid-template-columns: 1fr;">
+        <div class="field-group">
+          <label class="field-label" for="author-name">Your name <em style="font-weight:400; color:var(--error)">*</em></label>
+          <input type="text" id="author-name" name="author-name" placeholder="Full name" maxlength="80" aria-required="true" aria-describedby="err-name">
+          <div class="error-msg" id="err-name" role="alert" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="field-group">
+          <label class="field-label" for="author-email">Email <em style="font-weight:400; color:var(--muted)">(at least one required)</em></label>
+          <input type="email" id="author-email" name="author-email" placeholder="your@email.com" maxlength="120" aria-describedby="err-contact">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="author-phone">Phone <em style="font-weight:400; color:var(--muted)">(at least one required)</em></label>
+          <input type="text" id="author-phone" name="author-phone" placeholder="+1 555 000 0000" maxlength="30" aria-describedby="err-contact">
+        </div>
+      </div>
+      <div class="error-msg" id="err-contact" role="alert" aria-live="polite" style="margin-top:-1.25rem; margin-bottom:1rem"></div>
+
+      <div class="submit-row">
+        <p class="submit-note">Submissions are kept private and used only for research.</p>
+        <button type="submit" id="submit-btn">Submit three narratives</button>
+      </div>
+
+    </form>
+
+    <div class="thank-you" id="thank-you" aria-live="polite">
+      <div style="font-size:2.5rem">🔁</div>
+      <h2>Submission <em>received</em></h2>
+      <p>Your three narratives have arrived safely. Thank you for contributing to this research — and good luck in the competition.</p>
+      <button class="submit-another" id="submit-another">Submit another set</button>
+    </div>
+
+  </div><!-- /panel-submit -->
+
+</div><!-- /page -->
+
+<footer>
+  Analogy Narrative Competition &mdash; submissions are private and used for research purposes only
+</footer>
+
+<script>
+  /* ── Tabs ── */
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  /* ── Word count ── */
+  function wordCount(text) {
+    return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+  }
+
+  function updateWordCount(textarea, wcEl, errEl) {
+    const wc = wordCount(textarea.value);
+    if (textarea.value.trim() === '') {
+      wcEl.textContent = '';
+      wcEl.className = 'word-count';
+    } else {
+      wcEl.textContent = wc + ' word' + (wc === 1 ? '' : 's') + (wc < 25 ? ' (min 25)' : '');
+      wcEl.className = 'word-count ' + (wc < 25 ? 'under' : 'ok');
+    }
+    if (textarea.value.trim() && wc >= 50) errEl.textContent = '';
+  }
+
+  [['n1','wc1','err-n1'],['n2','wc2','err-n2'],['n3','wc3','err-n3']].forEach(([id, wc, err]) => {
+    const ta = document.getElementById(id);
+    const wcEl = document.getElementById(wc);
+    const errEl = document.getElementById(err);
+    ta.addEventListener('input', () => updateWordCount(ta, wcEl, errEl));
+  });
+
+  /* ── Mapping rows ── */
+  function attachRemove(btn) {
+    btn.addEventListener('click', function() {
+      const rows = document.querySelectorAll('.mapping-pair');
+      if (rows.length > 1) btn.closest('.mapping-pair').remove();
+    });
+  }
+
+  document.querySelectorAll('.mapping-remove').forEach(attachRemove);
+
+  document.getElementById('add-mapping').addEventListener('click', function() {
+    const row = document.createElement('div');
+    row.className = 'mapping-pair';
+    row.innerHTML = `
+      <input type="text" placeholder="Entity in Narrative 1" aria-label="Entity in Narrative 1">
+      <span class="mapping-arrow">→</span>
+      <input type="text" placeholder="Entity in Narrative 2" aria-label="Entity in Narrative 2">
+      <button type="button" class="mapping-remove" aria-label="Remove row" title="Remove">×</button>
+    `;
+    document.getElementById('mapping-rows').appendChild(row);
+    attachRemove(row.querySelector('.mapping-remove'));
+    row.querySelector('input').focus();
+  });
+
+  /* ── Validation ── */
+  function validateEmail(val) {
+    if (!val) return true;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  }
+
+  function hasAnyMapping() {
+    const pairs = document.querySelectorAll('.mapping-pair');
+    for (const pair of pairs) {
+      const inputs = pair.querySelectorAll('input');
+      if (inputs[0].value.trim() && inputs[1].value.trim()) return true;
+    }
+    return false;
+  }
+
+  document.getElementById('submission-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+    let firstInvalid = null;
+
+    [['n1','err-n1'],['n2','err-n2'],['n3','err-n3']].forEach(([id, errId]) => {
+      const ta = document.getElementById(id);
+      const errEl = document.getElementById(errId);
+      const wc = wordCount(ta.value);
+      if (!ta.value.trim()) {
+        errEl.textContent = 'This narrative is required.';
+        if (!firstInvalid) firstInvalid = ta;
+        valid = false;
+      } else if (wc < 25) {
+        errEl.textContent = 'Please write at least 25 words (currently ' + wc + ').';
+        if (!firstInvalid) firstInvalid = ta;
+        valid = false;
+      }
+    });
+
+    if (!hasAnyMapping()) {
+      document.getElementById('err-mapping').textContent = 'Please add at least one entity mapping between Narrative 1 and 2.';
+      if (!firstInvalid) firstInvalid = document.querySelector('#mapping-rows input');
+      valid = false;
+    } else {
+      document.getElementById('err-mapping').textContent = '';
+    }
+
+    const nameVal = document.getElementById('author-name').value.trim();
+    if (!nameVal) {
+      document.getElementById('err-name').textContent = 'Please enter your name.';
+      if (!firstInvalid) firstInvalid = document.getElementById('author-name');
+      valid = false;
+    }
+
+    const emailVal = document.getElementById('author-email').value.trim();
+    const phoneVal = document.getElementById('author-phone').value.trim();
+    if (!emailVal && !phoneVal) {
+      document.getElementById('err-contact').textContent = 'Please provide at least one contact method — email or phone.';
+      if (!firstInvalid) firstInvalid = document.getElementById('author-email');
+      valid = false;
+    } else if (emailVal && !validateEmail(emailVal)) {
+      document.getElementById('err-contact').textContent = 'That doesn\'t look like a valid email address.';
+      if (!firstInvalid) firstInvalid = document.getElementById('author-email');
+      valid = false;
+    } else {
+      document.getElementById('err-contact').textContent = '';
+    }
+
+    if (!valid) { firstInvalid.focus(); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    setTimeout(() => {
+      document.getElementById('submission-form').style.display = 'none';
+      document.getElementById('thank-you').style.display = 'block';
+    }, 600);
+  });
+
+  document.getElementById('submit-another').addEventListener('click', function() {
+    document.getElementById('submission-form').reset();
+    document.getElementById('submission-form').style.display = '';
+    document.getElementById('thank-you').style.display = 'none';
+
+    ['wc1','wc2','wc3'].forEach(id => {
+      const el = document.getElementById(id);
+      el.textContent = '';
+      el.className = 'word-count';
+    });
+    ['err-n1','err-n2','err-n3','err-name','err-contact','err-mapping'].forEach(id => {
+      document.getElementById(id).textContent = '';
+    });
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = false;
+    btn.textContent = 'Submit three narratives';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
